@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<int-ip:tcp-connection-factory id="server"
+    type="server"
+    port="9000"
+    using-nio="true"/>
