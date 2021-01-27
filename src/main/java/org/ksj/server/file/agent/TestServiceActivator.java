@@ -1,6 +1,6 @@
 package org.ksj.server.file.agent;
 
-import org.ksj.server.file.agent.server.service.FileSendReady;
+import org.ksj.server.file.agent.server.service.ServerFileSendReady;
 import org.ksj.server.file.agent.util.TelegramUtil;
 import org.ksj.server.file.agent.vo.TelegramVo;
 import org.slf4j.Logger;
@@ -17,7 +17,7 @@ public class TestServiceActivator {
 
 	private static final String IP_TCP_REMOTE_PORT = "ip_tcp_remotePort";
 	
-	private FileSendReady fileSendReady;
+	private ServerFileSendReady fileSendReady;
 
 	public Message<byte[]> echo(Message<byte[]> msg) {
 		// 현재 접속 중인 클라이언트 구분을 위한 값을 헤더에서 추출
@@ -47,7 +47,7 @@ public class TestServiceActivator {
 		return retMessage;
 	}
 
-	public void setFileSendReady(FileSendReady fileSendReady) {
+	public void setFileSendReady(ServerFileSendReady fileSendReady) {
 		this.fileSendReady = fileSendReady;
 	}
 }
