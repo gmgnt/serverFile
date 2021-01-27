@@ -17,7 +17,7 @@ import org.ksj.server.file.agent.vo.TelegramVo;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FileSendReady {
+public class ServerFileSendReady {
 	public TelegramVo fileSendReady(String key, TelegramVo inputVo) {
 		// 원래 파일 Hash 저장. 파일 Hash는 origin 데이터 저장되어 있음
 		CacheUtil.saveCache(key + Cnst.ORIGIN_FILE_HASH, ConvertUtil.byteArrayToString(inputVo.getData(0)));

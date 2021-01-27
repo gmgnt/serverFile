@@ -13,7 +13,7 @@
 	
 	<!-- Bean 선언 -->
 	<bean id="fileSendReady"
-		class="org.ksj.server.file.agent.server.service.FileSendReady" />
+		class="org.ksj.server.file.agent.server.service.ServerFileSendReady" />
 
 	<bean id="testServiceActivator"
 		class="org.ksj.server.file.agent.TestServiceActivator">
