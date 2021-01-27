@@ -7,6 +7,7 @@ public class Cnst {
 	//명령어
 	public static final int INST_REQ_FILE_SEND_READY = 1000;
 	public static final int INST_RET_FILE_SEND_READY = 1001;
+	public static final int INST_REQ_FILE_SEND = 2000;
+	public static final int INST_RES_FILE_SEND = 2000;
 	
-
 }

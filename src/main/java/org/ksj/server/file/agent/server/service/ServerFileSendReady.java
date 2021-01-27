@@ -53,8 +53,7 @@ public class ServerFileSendReady {
 		PKIVo vo = new PKIVo();
 		try {
 			KeyPairGenerator generator = KeyPairGenerator.getInstance("ECDSA", "BC");
-			ECGenParameterSpec ecsp;
-			ecsp = new ECGenParameterSpec("sect163k1");
+			ECGenParameterSpec ecsp = new ECGenParameterSpec("sect163k1");
 			generator.initialize(ecsp, new SecureRandom());
 
 			KeyPair keyPair = generator.generateKeyPair();
