@@ -18,9 +18,14 @@
 
 
 	<int-ip:tcp-connection-factory
-		id="server" type="server" port="${server.port:9000}" using-nio="true" 
-    	serializer="byteArrayCrlfSerializer"
-    	deserializer="byteArrayCrlfSerializer"
+		id="server" 
+		type="server" 
+		port="${server.port:9000}" 
+    	serializer="byteArrayLengthHeaderSerializer"
+    	deserializer="byteArrayLengthHeaderSerializer"
+    	so-send-buffer-size="99999999"
+    	so-receive-buffer-size="99999999"
+    	so-timeout=""
    	/>
     	
 

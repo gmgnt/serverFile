@@ -50,6 +50,8 @@ public class ServerFileReceive {
 			throw new RuntimeException(e);
 		}
 		
+		LOGGER.info("File receive completed");
+		
 		TelegramVo outVo = new TelegramVo();
 		outVo.setInst(Cnst.INST_RES_FILE_SEND);
 		outVo.addData(encFileHash);

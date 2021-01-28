@@ -41,20 +41,9 @@ public class TelegramVo {
 		sb.append("inst: ");
 		sb.append(inst);
 		sb.append("\n");
-		sb.append("data: ");
-		if(data.isEmpty()) {
-			sb.append("data is empty");
-			sb.append("\n");
-		}
-		else {
-			for(int i = 0 ; i < data.size() ; ++i) {
-				sb.append("data");
-				sb.append(i);
-				sb.append(": ");
-				sb.append(ConvertUtil.byteArrayToString(this.getData(i)));
-				sb.append("\n");
-			}
-		}
+		sb.append("data count: ");
+		sb.append(data.size());
+		sb.append("\n");
 		return sb.toString();
 	}
 	

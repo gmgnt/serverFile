@@ -16,8 +16,10 @@
 		type="client" 
 		host="${request.server.host:localhost}"
     	port="${request.server.port:9000}"
-    	serializer="byteArrayCrlfSerializer"
-    	deserializer="byteArrayCrlfSerializer"
+    	serializer="byteArrayLengthHeaderSerializer"
+    	deserializer="byteArrayLengthHeaderSerializer"
+    	so-send-buffer-size="99999999"
+    	so-receive-buffer-size="99999999"
 	/>
 	
 	<int-ip:tcp-outbound-gateway 

@@ -24,7 +24,7 @@ public class ServerServiceActivator {
 		// 현재 접속 중인 클라이언트 구분을 위한 값을 헤더에서 추출
 		int remotePort = (Integer) msg.getHeaders().get(IP_TCP_REMOTE_PORT);
 		String key = String.valueOf(remotePort); // cache에서 사용하게 될 prefix
-		LOGGER.debug(String.valueOf(remotePort));
+		LOGGER.debug(msg.getHeaders().toString());
 
 		byte[] byteArray = msg.getPayload();
 		// Vo형태로 전문 파싱

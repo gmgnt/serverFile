@@ -48,6 +48,8 @@ public class ClientService {
 			LOGGER.error("encFileHash Error. encFileHash: {}, receiveEncFileHash: {}", encFileHash, receiveEncFileHash);
 		}
 		
+		LOGGER.info("File send completed");
+		
 	}
 	
 	
