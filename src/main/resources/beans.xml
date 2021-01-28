@@ -30,5 +30,9 @@
 	<bean id="clientService" class="org.ksj.server.file.agent.client.service.ClientService">
 		<property name="client" ref="tcpClient"></property>
 	</bean>
+	
+	<bean id="byteArrayCrlfSerializer" class="org.springframework.integration.ip.tcp.serializer.ByteArrayCrLfSerializer">
+		<property name="maxMessageSize" value="99999999" />
+	</bean>
 
 </beans>

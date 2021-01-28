@@ -16,6 +16,8 @@
 		type="client" 
 		host="${request.server.host:localhost}"
     	port="${request.server.port:9000}"
+    	serializer="byteArrayCrlfSerializer"
+    	deserializer="byteArrayCrlfSerializer"
 	/>
 	
 	<int-ip:tcp-outbound-gateway 

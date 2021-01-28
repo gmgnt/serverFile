@@ -18,7 +18,11 @@
 
 
 	<int-ip:tcp-connection-factory
-		id="server" type="server" port="${server.port:9000}" using-nio="true" />
+		id="server" type="server" port="${server.port:9000}" using-nio="true" 
+    	serializer="byteArrayCrlfSerializer"
+    	deserializer="byteArrayCrlfSerializer"
+   	/>
+    	
 
 	<int:service-activator id="tServiceActivator"
 		input-channel="tcpChannel" output-channel="replyChannel" method="echo"

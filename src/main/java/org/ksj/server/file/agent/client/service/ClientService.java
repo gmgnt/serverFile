@@ -27,15 +27,20 @@ public class ClientService {
 		String pubKey = this.fileSendReady(file);
 		LOGGER.debug("publicKey: {}", pubKey);
 		
+		// 2. AES 키 생성 및 해당 키 비대칭 암호화 수행
+		String symmeticKey = CipherUtil.createSymmeticKey();
+		LOGGER.debug("symmeticKey: {}, byte length: {}", symmeticKey, Base64.decodeBase64(symmeticKey).length);
+		String encSymmeticKey = Base64.encodeBase64String(CipherUtil.encyptAsymmetic(Base64.decodeBase64(symmeticKey), pubKey));
+		
 		// 2. 파일 암호화
-		byte[] encFile = CipherUtil.encypt(file, pubKey);
+		byte[] encFile = CipherUtil.encyptSymmetic(file, symmeticKey);
 		
 		// 3. 암호화 파일 Hash 추출
 		String encFileHash = Base64.encodeBase64String(HashUtil.sha256(encFile));
 		LOGGER.debug("encFileHash: {}", encFileHash);
 		
 		// 4. 암호화 파일 전송
-		String receiveEncFileHash = this.sendFile(receiveFilePath, encFile);
+		String receiveEncFileHash = this.sendFile(receiveFilePath, encFile, encSymmeticKey);
 		LOGGER.debug("encFileHash: {}", receiveEncFileHash);
 		
 		// 5. 암호화 파일 Hash 검증
@@ -51,22 +56,23 @@ public class ClientService {
 		vo.setInst(Cnst.INST_REQ_FILE_SEND_READY);
 		vo.addData(HashUtil.sha256(file));
 		
-		LOGGER.debug("file Hash: {}", ConvertUtil.byteArrayToString(vo.getData(0)));
+		LOGGER.debug("file Hash: {}", Base64.encodeBase64String(vo.getData(0)));
 		
 		TelegramVo outVo = client.send(vo);
 		
-		return ConvertUtil.byteArrayToString(outVo.getData(0));
+		return  ConvertUtil.byteArrayToString(outVo.getData(0));
 	}
 	
-	private String sendFile(String filePath, byte[] encFile) {
+	private String sendFile(String filePath, byte[] encFile, String encSymmeticKey) {
 		TelegramVo vo = new TelegramVo();
 		vo.setInst(Cnst.INST_REQ_FILE_SEND);
 		vo.addData(filePath.getBytes());
 		vo.addData(encFile);
+		vo.addData(Base64.decodeBase64(encSymmeticKey));
 		
 		TelegramVo outVo = client.send(vo);
 		
-		return ConvertUtil.byteArrayToString(outVo.getData(0));
+		return Base64.encodeBase64String(outVo.getData(0));
 		
 	}
 	

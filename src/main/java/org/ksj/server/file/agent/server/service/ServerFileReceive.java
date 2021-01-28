@@ -4,7 +4,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.apache.commons.codec.binary.Base64;
 import org.ksj.server.file.agent.cnst.Cnst;
+import org.ksj.server.file.agent.util.CacheUtil;
+import org.ksj.server.file.agent.util.CipherUtil;
 import org.ksj.server.file.agent.util.ConvertUtil;
 import org.ksj.server.file.agent.util.HashUtil;
 import org.ksj.server.file.agent.vo.TelegramVo;
@@ -21,10 +24,22 @@ public class ServerFileReceive {
 		byte[] encFileHash = HashUtil.sha256(encFile);
 		
 		// 2. 복호화 수행
-		// TODO 복호화 수행
-		byte[] decFile = encFile;
+		// PrivateKey 조회
+		String privateKey = CacheUtil.getCache(key + Cnst.PRIVATE_KEY); // cache에 키 조회
+		// 대칭키 복호화 수행
+		byte[] symmeticKey = CipherUtil.decryptAsymmetic(input.getData(2), privateKey);
+		byte[] decFile = CipherUtil.decyptSymmetic(encFile, Base64.encodeBase64String(symmeticKey));
 		
-		// 3. 파일 생성
+		// 3. 복호화 파일 Hash 비교
+		String decFileHash = Base64.encodeBase64String(HashUtil.sha256(decFile));
+		String originFileHash = CacheUtil.getCache(key + Cnst.ORIGIN_FILE_HASH);
+		if(!decFileHash.equals(originFileHash)) {
+			LOGGER.error("file hash is different. origin File Hash: {}, dec file hash: {}", originFileHash, decFileHash);
+			//TODO 에러 정제 필요
+			throw new RuntimeException();
+		}
+		
+		// 4. 파일 생성
 		String filePath = ConvertUtil.byteArrayToString(input.getData(0));
 		
 		File file = new File(filePath);

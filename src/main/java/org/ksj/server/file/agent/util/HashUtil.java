@@ -30,5 +30,17 @@ public class HashUtil {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public static byte[] sha128(byte[] msg) {
+		try {
+	    MessageDigest md = MessageDigest.getInstance("SHA1");
+	    md.update(msg);
+	    
+	    return Base64.encodeBase64String(md.digest()).getBytes();
+		} catch(NoSuchAlgorithmException e) {
+			//TODO RuntimeException 정제
+			throw new RuntimeException(e);
+		}
+	}
 
 }
