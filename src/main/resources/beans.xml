@@ -14,10 +14,13 @@
 	<!-- Bean 선언 -->
 	<bean id="fileSendReady"
 		class="org.ksj.server.file.agent.server.service.ServerFileSendReady" />
+		
+	<bean id="fileReceive" class="org.ksj.server.file.agent.server.service.ServerFileReceive" />
 
 	<bean id="testServiceActivator"
-		class="org.ksj.server.file.agent.TestServiceActivator">
+		class="org.ksj.server.file.agent.server.activator.ServerServiceActivator">
 		<property name="fileSendReady" ref="fileSendReady" />
+		<property name="fileReceive" ref="fileReceive" />
 	</bean>
 	
 	<bean id="tcpClient" class="org.ksj.server.file.agent.client.TcpClient">

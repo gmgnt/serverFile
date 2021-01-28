@@ -1,23 +1,24 @@
-package org.ksj.server.file.agent;
+package org.ksj.server.file.agent.server.activator;
 
+import org.ksj.server.file.agent.server.service.ServerFileReceive;
 import org.ksj.server.file.agent.server.service.ServerFileSendReady;
 import org.ksj.server.file.agent.util.TelegramUtil;
 import org.ksj.server.file.agent.vo.TelegramVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
 
 
 
-public class TestServiceActivator {
+public class ServerServiceActivator {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(TestServiceActivator.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ServerServiceActivator.class);
 
 	private static final String IP_TCP_REMOTE_PORT = "ip_tcp_remotePort";
 	
 	private ServerFileSendReady fileSendReady;
+	private ServerFileReceive fileReceive;
 
 	public Message<byte[]> echo(Message<byte[]> msg) {
 		// 현재 접속 중인 클라이언트 구분을 위한 값을 헤더에서 추출
@@ -35,6 +36,9 @@ public class TestServiceActivator {
 		case 1000:
 			outVo = fileSendReady.fileSendReady(key, inputVo);
 			break;
+		case 2000:
+			outVo = fileReceive.fileReceive(key, inputVo);
+			break;
 		default:
 			throw new RuntimeException();
 		}
@@ -49,5 +53,9 @@ public class TestServiceActivator {
 
 	public void setFileSendReady(ServerFileSendReady fileSendReady) {
 		this.fileSendReady = fileSendReady;
+	}
+
+	public void setFileReceive(ServerFileReceive fileReceive) {
+		this.fileReceive = fileReceive;
 	}
 }
