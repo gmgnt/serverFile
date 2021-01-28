@@ -52,15 +52,14 @@ public class ServerFileSendReady {
 	private PKIVo Generate() {
 		PKIVo vo = new PKIVo();
 		try {
-			KeyPairGenerator generator = KeyPairGenerator.getInstance("ECDSA", "BC");
-			ECGenParameterSpec ecsp = new ECGenParameterSpec("sect163k1");
-			generator.initialize(ecsp, new SecureRandom());
+			KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
+			generator.initialize(2048, new SecureRandom());
 
 			KeyPair keyPair = generator.generateKeyPair();
 			vo.setPrivateKey(Base64.encodeBase64String(keyPair.getPrivate().getEncoded()));
 			vo.setPublicKey(Base64.encodeBase64String(keyPair.getPublic().getEncoded()));
 
-		} catch (NoSuchAlgorithmException | InvalidAlgorithmParameterException | NoSuchProviderException e) {
+		} catch (NoSuchAlgorithmException e) {
 			// TODO 에러 상세화
 			throw new RuntimeException(e);
 		}

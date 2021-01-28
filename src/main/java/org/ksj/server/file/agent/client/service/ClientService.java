@@ -3,6 +3,7 @@ package org.ksj.server.file.agent.client.service;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.ksj.server.file.agent.client.TcpClient;
 import org.ksj.server.file.agent.cnst.Cnst;
@@ -27,15 +28,20 @@ public class ClientService {
 		LOGGER.debug("publicKey: {}", pubKey);
 		
 		// 2. 파일 암호화
-		// TODO 암호화 구현 필요
-		byte[] encFile = file;
+		byte[] encFile = CipherUtil.encypt(file, pubKey);
 		
 		// 3. 암호화 파일 Hash 추출
-		// TODO 암호화 파일 Hash 추출
+		String encFileHash = Base64.encodeBase64String(HashUtil.sha256(encFile));
+		LOGGER.debug("encFileHash: {}", encFileHash);
 		
 		// 4. 암호화 파일 전송
-		String encFileHash = this.sendFile(receiveFilePath, encFile);
-		LOGGER.debug("encFileHash: {}", encFileHash);
+		String receiveEncFileHash = this.sendFile(receiveFilePath, encFile);
+		LOGGER.debug("encFileHash: {}", receiveEncFileHash);
+		
+		// 5. 암호화 파일 Hash 검증
+		if(!encFileHash.equals(receiveEncFileHash)) {
+			LOGGER.error("encFileHash Error. encFileHash: {}, receiveEncFileHash: {}", encFileHash, receiveEncFileHash);
+		}
 		
 	}
 	
