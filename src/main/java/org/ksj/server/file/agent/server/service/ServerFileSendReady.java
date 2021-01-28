@@ -1,12 +1,9 @@
 package org.ksj.server.file.agent.server.service;
 
-import java.security.InvalidAlgorithmParameterException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
-import java.security.spec.ECGenParameterSpec;
 
 import org.apache.commons.codec.binary.Base64;
 import org.ksj.server.file.agent.cnst.Cnst;
